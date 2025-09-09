@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  proyectar:
+    build: .
+    container_name: proyectar-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - FRONTEND_URL=https://proyectar.labo.disilab.cpci.org.ar
+    volumes:
+      - ./data/logs:/app/logs
+    networks:
+      - web
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web'
+      - 'traefik.http.routers.proyectar.entrypoints=websecure'
+      - "traefik.http.routers.proyectar.rule=Host(`proyectar.labo.disilab.cpci.org.ar`)"
+      - "traefik.http.routers.proyectar.tls=true"
+      - "traefik.http.routers.proyectar.tls.certresolver=leresolver"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.proyectar.middlewares=https_redirect"
+      - "traefik.http.services.proyectar.loadbalancer.server.port=3000"
+
+
+networks:
+  web:
+    external: true
