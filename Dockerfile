@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Copy source code
 COPY . ./
 
@@ -19,8 +22,6 @@ COPY env.production .env.local
 # Build the Next.js application
 RUN npm run build
 
-# Create necessary directories
-RUN mkdir -p /app/backend/uploads /app/logs
 
 # Expose port 3000 (Next.js default)
 EXPOSE 3000

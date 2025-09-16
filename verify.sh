@@ -50,11 +50,11 @@ ssh proyecto1@vps1.disilab.cpci.org.ar << 'EOF'
     echo ""
     echo "🔍 Verificando salud de contenedores..."
     
-    # Verificar que los contenedores estén corriendo
-    if docker-compose ps | grep -q "Up"; then
-        echo "✅ Contenedores están corriendo"
+    # Verificar que los contenedores estén saludables o en ejecución
+    if docker-compose ps | grep -E -q "running \\(healthy\\)|Up"; then
+        echo "✅ Contenedores saludables/en ejecución"
     else
-        echo "❌ Algunos contenedores no están corriendo"
+        echo "❌ Algunos contenedores no están corriendo/healthy"
         exit 1
     fi
     

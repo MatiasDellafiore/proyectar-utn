@@ -37,9 +37,6 @@ if [ ! -f "docker-compose.yml" ]; then
     exit 1
 fi
 
-# Crear directorios necesarios
-print_status "Creando directorios de datos..."
-mkdir -p data/uploads data/logs data/mongo
 
 # Verificar conexión SSH
 print_status "Verificando conexión SSH..."
